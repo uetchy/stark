@@ -1,0 +1,23 @@
+{
+  "name": "Stark",
+  "version": "1.0.0",
+  "description": "GitHub Stars manager for macOS.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [],
+  "author": "Yasuaki Uechi <uetchy@randompaper.co> (https://randompaper.co/)",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "dotenv": "^4.0.0",
+    "github": "^9.1.0"
+  },
+  "devDependencies": {
+    "ava": "^0.18.2"
+  }
+}
