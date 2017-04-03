@@ -15,7 +15,8 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "dotenv": "^4.0.0",
-    "github": "^9.1.0"
+    "github": "^9.1.0",
+    "level": "^1.6.0"
   },
   "devDependencies": {
     "ava": "^0.18.2"
