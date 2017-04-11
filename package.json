@@ -13,10 +13,14 @@
   "author": "Yasuaki Uechi <uetchy@randompaper.co> (https://randompaper.co/)",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.16.1",
     "bluebird": "^3.5.0",
+    "date-fns": "^1.28.2",
     "dotenv": "^4.0.0",
+    "fs-promise": "^2.0.2",
     "github": "^9.1.0",
-    "level": "^1.6.0"
+    "level": "^1.6.0",
+    "yunodb": "^0.1.4"
   },
   "devDependencies": {
     "ava": "^0.18.2"
