@@ -1,4 +1,4 @@
-const {initDatabase} = require('./lib/database')
+const { initDatabase } = require('./lib/database')
 const ConfigStore = require('./lib/config')
 const GitHubAPI = require('./lib/api')
 
@@ -11,8 +11,8 @@ async function init() {
   initDatabase((err, db) => {
     if (err) throw err
 
-    apiClient.starredWithReadme((record) => {      
-      db.add([record], (err) => {
+    apiClient.starredWithReadme(record => {
+      db.add([record], err => {
         if (err) {
           console.log('db error:', err)
           return
