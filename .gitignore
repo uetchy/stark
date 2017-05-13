@@ -1,4 +1,6 @@
 config.json
+stars_db
+starred.json
 
 # Created by https://www.gitignore.io/api/node
 
