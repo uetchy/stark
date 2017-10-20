@@ -18,11 +18,12 @@
     "date-fns": "^1.28.4",
     "dotenv": "^4.0.0",
     "fs-promise": "^2.0.3",
-    "github": "^9.1.0",
-    "level": "^1.6.0",
+    "github": "^11.0.0",
+    "level": "^2.0.0",
+    "search-index": "^0.14.0",
     "yunodb": "^0.1.4"
   },
   "devDependencies": {
-    "ava": "^0.19.1"
+    "ava": "^0.22.0"
   }
 }
