@@ -2,28 +2,38 @@
   "name": "Stark",
   "version": "1.0.0",
   "description": "GitHub Stars manager for macOS.",
-  "main": "index.js",
+  "main": "main.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "start": "concurrently \"parcel watch renderer/index.js\" \"electron .\""
   },
   "keywords": [],
-  "author": "Yasuaki Uechi <uetchy@randompaper.co> (https://randompaper.co/)",
+  "author": "Yasuaki Uechi <y@uechi.io> (https://uechi.io/)",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.17.1",
     "bluebird": "^3.5.0",
     "date-fns": "^1.28.4",
-    "dotenv": "^4.0.0",
+    "electron": "^1.7.9",
     "fs-promise": "^2.0.3",
     "github": "^13.0.1",
-    "level": "^2.0.0",
+    "level": "^2.1.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "search-index": "^0.15.0",
     "yunodb": "^0.1.4"
   },
   "devDependencies": {
-    "ava": "^0.24.0"
+    "dotenv": "^4.0.0",
+    "ava": "^0.24.0",
+    "babel-preset-react": "^6.24.1",
+    "concurrently": "^3.5.1",
+    "electron-packager": "^10.1.0",
+    "parcel-bundler": "^1.2.0"
   }
 }
