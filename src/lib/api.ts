@@ -1,42 +1,40 @@
-const axios = require('axios');
-const parse = require('date-fns/parse');
-const Promise = require('bluebird');
-const github = require('github');
-const extend = require('util')._extend;
+import axios from 'axios'
+import * as parse from 'date-fns/parse'
+import * as octokit from '@octokit/rest'
 
-module.exports = class API {
+export default class API {
+  client: octokit
+
   constructor(accessToken = '') {
-    this.client = new github({
-      debug: false,
+    this.client = new octokit({
       headers: {
         'user-agent': 'Stark',
         accept: 'application/vnd.github.v3.star+json',
       },
-      Promise: Promise,
-    });
-    this.client.authenticate({ type: 'oauth', token: accessToken });
+    })
+    this.client.authenticate({ type: 'oauth', token: accessToken })
   }
 
-  async starredWithReadme(callback) {
-    const _client = this.client;
+  async starredWithReadme(callback: Function) {
+    const _client = this.client
 
-    async function _pager(response) {
-      console.log('got response:', response.data.length);
-      console.log(response.meta);
+    async function _pager(response: octokit.AnyResponse) {
+      console.log('got response:', response.data.length)
+      console.log(response.meta)
 
       for (const star of response.data) {
-        console.log('fetching readme:', star.repo.full_name);
+        console.log('fetching readme:', star.repo.full_name)
 
-        let readme = '';
+        let readme = ''
         try {
-          console.log({ owner: star.repo.owner.login, repo: star.repo.name });
+          console.log({ owner: star.repo.owner.login, repo: star.repo.name })
           const readmeResponse = await _client.repos.getReadme({
             owner: star.repo.owner.login,
             repo: star.repo.name,
-          });
-          readme = new Buffer(readmeResponse.data.content, 'base64').toString();
+          })
+          readme = new Buffer(readmeResponse.data.content, 'base64').toString()
         } catch (err) {
-          console.log('readme not found', err);
+          console.log('readme not found', err)
         }
 
         const record = {
@@ -59,22 +57,23 @@ module.exports = class API {
           open_issues_count: star.repo.open_issues_count,
           language: star.repo.language,
           readme,
-        };
+        }
 
-        callback(record);
+        callback(record)
+        Promise.resolve()
       }
 
       if (_client.hasNextPage(response)) {
-        return _client.getNextPage(response).then(_pager);
+        return _client.getNextPage(response).then(_pager)
       }
 
-      console.log('no more pages');
+      console.log('no more pages')
     }
 
     _client.activity
       .getStarredRepos({
         per_page: 100,
       })
-      .then(_pager);
+      .then(_pager)
   }
-};
+}

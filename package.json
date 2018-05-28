@@ -1,39 +1,42 @@
 {
-  "name": "Stark",
+  "name": "stark",
   "version": "1.0.0",
   "description": "GitHub Stars manager for macOS.",
-  "main": "main.js",
+  "main": "dist/main.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "ava",
-    "start": "concurrently \"parcel watch renderer/index.js\" \"electron .\""
+    "start": "concurrently \"tsc -w\" \"electron .\""
   },
   "keywords": [],
   "author": "Yasuaki Uechi <y@uechi.io> (https://uechi.io/)",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.17.1",
-    "bluebird": "^3.5.0",
+    "@octokit/rest": "^15.8.0",
+    "@types/react": "^16.3.14",
+    "@types/react-dom": "^16.0.5",
+    "axios": "^0.18.0",
     "date-fns": "^1.28.4",
-    "electron": "^1.7.9",
-    "fs-promise": "^2.0.3",
-    "github": "^13.0.1",
-    "level": "^2.1.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-redux": "^5.0.6",
-    "redux": "^3.7.2",
+    "electron": "^2.0.2",
+    "level": "^4.0.0",
+    "lowdb": "^1.0.0",
+    "lunr": "^2.2.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
     "search-index": "^0.15.0",
     "yunodb": "^0.1.4"
   },
   "devDependencies": {
-    "dotenv": "^4.0.0",
-    "ava": "^0.24.0",
+    "ava": "^0.25.0",
     "babel-preset-react": "^6.24.1",
     "concurrently": "^3.5.1",
-    "electron-packager": "^10.1.0",
-    "parcel-bundler": "^1.2.0"
+    "dotenv": "^5.0.1",
+    "electron-packager": "^12.1.0",
+    "parcel-bundler": "^1.8.1",
+    "typescript": "^2.8.3"
   }
 }

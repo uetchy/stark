@@ -1,8 +1,8 @@
-const yuno = require('yunodb');
+import yuno from 'yunodb'
 
-const dbPath = './stars_db';
+const dbPath = './stars_db'
 
-function initDatabase(callback) {
+export function initDatabase(callback: Function) {
   return yuno(
     {
       location: dbPath,
@@ -10,9 +10,5 @@ function initDatabase(callback) {
       indexMap: { name: false, description: true, readme: true },
     },
     callback
-  );
+  )
 }
-
-module.exports = {
-  initDatabase,
-};

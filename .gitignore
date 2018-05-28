@@ -1,7 +1,7 @@
 .cache
 config.json
-stars_db
-starred.json
+/dist
+/stars_db
 
 # Created by https://www.gitignore.io/api/node
 
