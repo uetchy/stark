@@ -1,4 +1,4 @@
-declare namespace API {
+declare namespace GithubAPI {
   interface Response {
     id: number
     name: string

@@ -1,18 +1,15 @@
 import { Github } from './githubService'
-import { createDatastore } from '../database'
-import { promisify } from 'util'
+import { Datastore } from '../datastore'
 
 // fetch and index all starred repos
 export async function createIndex(githubToken: string) {
   const github = new Github(githubToken)
-  const db = createDatastore()
+  const db = new Datastore()
 
   try {
-    const repos = (await github.starredRepos(
-      (res: API.Response, link: string) => {}
-    )) as API.Response[]
+    const repos = (await github.starredRepos()) as GithubAPI.Response[]
     for (const repo of repos) {
-      const doc = await promisify(db.insert.bind(db))(repo)
+      const doc = await db.insert(repo)
       console.log('added', repo.name)
     }
   } catch (err) {

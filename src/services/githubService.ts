@@ -15,18 +15,18 @@ export class Github {
     this.client.authenticate({ type: 'oauth', token: accessToken })
   }
 
-  async starredRepos(callback: Function) {
+  async starredRepos() {
     const _client = this.client
-    let records: API.Response[] = []
+    let records: GithubAPI.Response[] = []
 
     async function _pager(
       response: octokit.AnyResponse
-    ): Promise<octokit.AnyResponse | API.Response[]> {
+    ): Promise<octokit.AnyResponse | GithubAPI.Response[]> {
       console.log('got response with items:', response.data.length)
       console.log('rate limit:', response.headers['x-ratelimit-remaining'])
 
       for (const star of response.data) {
-        const record = <API.Response>{
+        const record = <GithubAPI.Response>{
           id: star.repo.id,
           name: star.repo.name,
           owner: star.repo.owner.login,
@@ -47,9 +47,7 @@ export class Github {
           language: star.repo.language,
           readme: null,
         }
-
         records.push(record)
-        callback(record, response.headers.link)
       }
 
       if (_client.hasNextPage(response.headers)) {
