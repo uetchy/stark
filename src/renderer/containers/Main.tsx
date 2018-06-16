@@ -1,3 +1,5 @@
 import * as React from 'react'
 
-export default class Main extends React.Component {}
+export default class Main extends React.Component {
+  componentDidMount() {}
+}
