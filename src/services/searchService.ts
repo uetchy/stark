@@ -9,8 +9,9 @@ export async function createIndex(githubToken: string) {
   try {
     const repos = (await github.starredRepos()) as GithubAPI.Response[]
     for (const repo of repos) {
+      if (await db.exist(repo.id)) continue
+
       const doc = await db.insert(repo)
-      console.log('added', repo.name)
     }
   } catch (err) {
     throw err
