@@ -1,8 +1,8 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain, IpcMessageEvent } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
-
-import { createIndex } from './services/searchService'
+import { config } from 'dotenv'
+config()
 
 let mainWindow: Electron.BrowserWindow
 

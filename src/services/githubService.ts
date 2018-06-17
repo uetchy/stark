@@ -1,8 +1,7 @@
-import axios from 'axios'
 import * as parse from 'date-fns/parse'
 import * as octokit from '@octokit/rest'
 
-export class Github {
+export class GithubService {
   client: octokit
 
   constructor(accessToken = '') {
@@ -17,16 +16,16 @@ export class Github {
 
   async starredRepos() {
     const _client = this.client
-    let records: GithubAPI.Response[] = []
+    let records: GithubService.Repository[] = []
 
     async function _pager(
       response: octokit.AnyResponse
-    ): Promise<octokit.AnyResponse | GithubAPI.Response[]> {
-      console.log('got response with items:', response.data.length)
-      console.log('rate limit:', response.headers['x-ratelimit-remaining'])
+    ): Promise<octokit.AnyResponse | GithubService.Repository[]> {
+      // console.log('got response with items:', response.data.length)
+      // console.log('rate limit:', response.headers['x-ratelimit-remaining'])
 
       for (const star of response.data) {
-        const record = <GithubAPI.Response>{
+        const record = <GithubService.Repository>{
           id: star.repo.id,
           name: star.repo.name,
           owner: star.repo.owner.login,
@@ -38,6 +37,7 @@ export class Github {
           starred_at: parse(star.starred_at),
           created_at: parse(star.repo.created_at),
           pushed_at: parse(star.repo.pushed_at),
+          fetched_at: new Date(),
           homepage: star.repo.homepage,
           size: star.repo.size,
           stargazers_count: star.repo.stargazers_count,
@@ -51,25 +51,29 @@ export class Github {
       }
 
       if (_client.hasNextPage(response.headers)) {
-        console.log('goto next page')
+        // console.log('goto next page')
         const nextResponse = await _client.getNextPage(response.headers)
         return await _pager(nextResponse)
       }
 
-      console.log('no more pages')
+      // console.log('no more pages')
       return records
     }
 
-    const response = await _client.activity.getStarredRepos({
-      per_page: 30, // DEBUG
-      page: 100,
-    })
-    return await _pager(response)
+    try {
+      const response = await _client.activity.getStarredRepos({
+        per_page: 30, // DEBUG
+        page: 100,
+      })
+      return await _pager(response)
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
   }
 
   async getReadme(owner: string, repo: string): Promise<string> {
     try {
-      console.log({ owner, repo })
       const readmeResponse = await this.client.repos.getReadme({
         owner,
         repo,
@@ -78,11 +82,14 @@ export class Github {
         readmeResponse.data.content,
         'base64'
       ).toString()
-      console.log('readme length:', readme.length)
       return readme
     } catch (err) {
-      console.log('readme not found', err)
-      throw err
+      if (err.code == 404) {
+        throw 'ENOTFOUND'
+      } else {
+        console.log(err)
+        throw 'EINTERNAL'
+      }
     }
   }
 }
